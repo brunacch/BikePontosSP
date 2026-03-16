@@ -3,6 +3,7 @@ package com.example.bikepontossp.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,12 +43,16 @@ import androidx.compose.ui.unit.sp
 import com.example.bikepontossp.R
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(
+    onSignupSuccess: () -> Unit = {},
+    onLoginClick: () -> Unit = {}
+) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Box(modifier = Modifier.fillMaxSize()) {
+
         Image(
             painter = painterResource(id = R.drawable.bike_background),
             contentDescription = "Background tela signup",
@@ -58,7 +63,7 @@ fun SignupScreen() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.8f))
+                .background(Color.Black.copy(alpha = 0.80f))
         )
 
         Column(
@@ -70,6 +75,7 @@ fun SignupScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Text(
                 text = "Criar nova conta",
                 color = Color.White,
@@ -86,6 +92,7 @@ fun SignupScreen() {
 
             Spacer(modifier = Modifier.height(28.dp))
 
+            // Avatar com câmera
             Box(
                 modifier = Modifier.size(90.dp),
                 contentAlignment = Alignment.BottomEnd
@@ -133,7 +140,7 @@ fun SignupScreen() {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
+                label = { Text("E-mail") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -174,7 +181,7 @@ fun SignupScreen() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { },
+                onClick = { onSignupSuccess() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
@@ -186,6 +193,15 @@ fun SignupScreen() {
             ) {
                 Text("Tudo Pronto")
             }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            Text(
+                text = "Já tem conta? Entrar",
+                color = Color.White,
+                fontSize = 13.sp,
+                modifier = Modifier.clickable { onLoginClick() }
+            )
         }
     }
 }
